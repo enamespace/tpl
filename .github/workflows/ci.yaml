@@ -20,6 +20,9 @@ jobs:
     name: test on ${{ matrix.os }}
     
     steps:
+      - name: Check out code directory
+        uses: actions/checkout@v2
+      
       - name: Generate all necessary files
         run: |
           make gen
