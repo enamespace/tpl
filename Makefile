@@ -4,6 +4,8 @@
 all: tidy gen format lint cover build
 
 include scripts/make-rules/common.mk
+include scripts/make-rules/golang.mk
+include scripts/make-rules/tools.mk
 
 .PHONY: tidy
 tidy:
@@ -29,3 +31,8 @@ cover:
 build:
 	@echo "make build"
 
+
+## tools: install dependent tools.
+.PHONY: tools
+tools:
+	@$(MAKE) tools.install
