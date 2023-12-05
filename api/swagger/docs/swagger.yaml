@@ -1,0 +1,87 @@
+basePath: /
+consumes:
+    - application/json
+definitions:
+    User:
+        description: User represents body of user request and response
+        properties:
+            address:
+                description: User's address
+                type: string
+                x-go-name: Address
+            email:
+                description: User's email
+                type: string
+                x-go-name: Email
+            name:
+                description: User's name
+                type: string
+                x-go-name: Name
+        required:
+            - name
+        type: object
+        x-go-package: github.com/enamespace/tpl/api/swagger/api
+host: tpl.com
+info:
+    title: Documentation of our awesome API.
+    version: 0.1.0
+paths:
+    /users:
+        post:
+            description: |-
+                Create a user in memory
+                response:
+                200: createUserResponse
+                default: errResponse
+            operationId: createUserRequest
+            parameters:
+                - in: body
+                  name: Body
+                  schema:
+                    $ref: '#/definitions/User'
+            tags:
+                - user
+    /users/{name}:
+        get:
+            description: |-
+                Get a user from memory
+                response:
+                200: getUserResponse
+                default: errResponse
+            operationId: getUserRequest
+            parameters:
+                - in: path
+                  name: name
+                  required: true
+                  type: string
+                  x-go-name: Name
+            tags:
+                - user
+produces:
+    - application/json
+responses:
+    createUserResponse:
+        description: This text will appear as description of createUserResponse
+        schema:
+            $ref: '#/definitions/User'
+    errResponse:
+        description: This text will appear as description of response body
+        headers:
+            code:
+                description: Error Code
+                format: int64
+                type: integer
+            message:
+                description: Error Message
+                type: string
+    getUserResponse:
+        description: This text will appear as description of getUserResponse
+        schema:
+            $ref: '#/definitions/User'
+schemes:
+    - http
+    - https
+securityDefinitions:
+    basic:
+        type: basic
+swagger: "2.0"

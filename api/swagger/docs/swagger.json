@@ -1,0 +1,117 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "title": "Documentation of our awesome API.",
+    "version": "0.1.0"
+  },
+  "host": "tpl.com",
+  "basePath": "/",
+  "paths": {
+    "/users": {
+      "post": {
+        "description": "Create a user in memory\nresponse:\n200: createUserResponse\ndefault: errResponse",
+        "tags": [
+          "user"
+        ],
+        "operationId": "createUserRequest",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ]
+      }
+    },
+    "/users/{name}": {
+      "get": {
+        "description": "Get a user from memory\nresponse:\n200: getUserResponse\ndefault: errResponse",
+        "tags": [
+          "user"
+        ],
+        "operationId": "getUserRequest",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "Name",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "description": "User represents body of user request and response",
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "address": {
+          "description": "User's address",
+          "type": "string",
+          "x-go-name": "Address"
+        },
+        "email": {
+          "description": "User's email",
+          "type": "string",
+          "x-go-name": "Email"
+        },
+        "name": {
+          "description": "User's name",
+          "type": "string",
+          "x-go-name": "Name"
+        }
+      },
+      "x-go-package": "github.com/enamespace/tpl/api/swagger/api"
+    }
+  },
+  "responses": {
+    "createUserResponse": {
+      "description": "This text will appear as description of createUserResponse",
+      "schema": {
+        "$ref": "#/definitions/User"
+      }
+    },
+    "errResponse": {
+      "description": "This text will appear as description of response body",
+      "headers": {
+        "code": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Error Code"
+        },
+        "message": {
+          "type": "string",
+          "description": "Error Message"
+        }
+      }
+    },
+    "getUserResponse": {
+      "description": "This text will appear as description of getUserResponse",
+      "schema": {
+        "$ref": "#/definitions/User"
+      }
+    }
+  },
+  "securityDefinitions": {
+    "basic": {
+      "type": "basic"
+    }
+  }
+}

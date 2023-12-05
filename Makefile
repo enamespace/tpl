@@ -36,3 +36,8 @@ build:
 .PHONY: tools
 tools:
 	@$(MAKE) tools.install
+
+## swagger: Generate swagger document.
+.PHONY: swagger
+swagger:
+	@$(MAKE) swagger.run
