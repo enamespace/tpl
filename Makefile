@@ -21,7 +21,7 @@ format:
 
 .PHONY: lint
 lint:
-	@echo "make lint"
+	@$(MAKE) go.lint
 
 .PHONY: cover
 cover:

@@ -3,17 +3,21 @@ TOOLS ?=$(BLOCKER_TOOLS) $(CRITICAL_TOOLS) $(TRIVIAL_TOOLS)
 .PHONY: tools.install
 tools.install: $(addprefix tool.install., $(TOOLS))
 
-
 .PHONY: tools.install.%
 tool.install.%:
 	@echo "========> Installing $*"
 	@$(MAKE) install.$*
 
+.PHONY: tools.verify.%
+tools.verify.%:
+	@echo "verify $*"
+	@if ! which $* &>/dev/null; then $(MAKE) tools.install.$*; fi
 
 .PHONY: install.protoc-gen-go
 install.protoc-gen-go:
 	@$(GO) install github.com/golang/protobuf/protoc-gen-go@latest
 
+.PHONY: install.mockgen
 install.mockgen:
 	@$(GO) install github.com/golang/mock/mockgen@latest
 
