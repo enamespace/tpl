@@ -17,7 +17,9 @@ func readConfig(ctx *cli.Context) error {
 		log.Fatal(err)
 	}
 
-	readSetString(ctx)
+	if err := readSetString(ctx); err != nil {
+		return err
+	}
 	log.Printf("use configuration files is: %s\n", viper.ConfigFileUsed())
 	return nil
 }

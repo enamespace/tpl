@@ -1,12 +1,8 @@
 package config
 
+import "github.com/enamespace/tpl/pkg/options"
+
 type Config struct {
-	LogLevel string
-	Port     string
-	MySQL    struct {
-		Host     string
-		Username string
-		Password string
-		Database string
-	}
+	GenericServerOptions options.GenericServerOptions `json:"server"   mapstructure:"server"`
+	MySQLOptions         options.MySQLOptions         `json:"mysql"   mapstructure:"mysql"`
 }

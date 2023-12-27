@@ -8,7 +8,7 @@ import (
 )
 
 func initRouter(g *gin.Engine) {
-	middleware.RequestID()
+	g.Use(middleware.RequestID())
 
 	v1 := g.Group("v1")
 
