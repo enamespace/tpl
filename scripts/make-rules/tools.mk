@@ -29,3 +29,11 @@ install.golangci-lint:
 .PHONY: install.go-callvis
 install.go-callvis:
 	@$(GO) install github.com/ofabry/go-callvis@latest
+
+.PHONY: install.golines
+install.golines:
+	@$(GO) install github.com/segmentio/golines@latest
+
+.PHONY: install.goimports
+install.goimports:
+	@$(GO) install golang.org/x/tools/cmd/goimports@latest

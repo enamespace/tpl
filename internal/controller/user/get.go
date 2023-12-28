@@ -3,8 +3,9 @@ package user
 import (
 	"log"
 
-	"github.com/enamespace/tpl/pkg/core"
 	"github.com/gin-gonic/gin"
+
+	"github.com/enamespace/tpl/pkg/core"
 )
 
 func (u *UserController) Get(c *gin.Context) {

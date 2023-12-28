@@ -1,8 +1,11 @@
 package config
 
-import "github.com/enamespace/tpl/pkg/options"
+import "github.com/enamespace/tpl/internal/options"
 
 type Config struct {
-	GenericServerOptions options.GenericServerOptions `json:"server"   mapstructure:"server"`
-	MySQLOptions         options.MySQLOptions         `json:"mysql"   mapstructure:"mysql"`
+	*options.Options
+}
+
+func CreateConfigFromOptions(o *options.Options) *Config {
+	return &Config{o}
 }

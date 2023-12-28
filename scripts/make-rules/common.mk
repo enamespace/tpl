@@ -1,6 +1,7 @@
 SHELL := /bin/bash
 COMMON_SELF_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 ROOT_DIR := $(abspath $(shell cd $(COMMON_SELF_DIR)/../.. && pwd -P))
+ROOT_PACKAGE=github.com/enamespace/tpl
 BUILD_TIME=$(shell date -u +'%Y-%m-%d_%H:%M:%S_GMT')
 LEFT_BRACKET=(
 BRANCH=$(shell git branch | grep "*" | awk '{print $$2}' | cut -d "$(LEFT_BRACKET)" -f 2)

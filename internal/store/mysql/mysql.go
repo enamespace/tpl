@@ -3,8 +3,9 @@ package mysql
 import (
 	"sync"
 
-	"github.com/enamespace/tpl/internal/store"
 	"gorm.io/gorm"
+
+	"github.com/enamespace/tpl/internal/store"
 )
 
 type datastore struct {

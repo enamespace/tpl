@@ -3,8 +3,9 @@ package logrus
 import (
 	"context"
 
-	"github.com/enamespace/tpl/pkg/log"
 	"github.com/sirupsen/logrus"
+
+	"github.com/enamespace/tpl/pkg/log"
 )
 
 type Logger struct {

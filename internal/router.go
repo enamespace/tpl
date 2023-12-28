@@ -1,10 +1,11 @@
 package internal
 
 import (
+	"github.com/gin-gonic/gin"
+
 	"github.com/enamespace/tpl/internal/controller/user"
 	"github.com/enamespace/tpl/internal/pkg/middleware"
 	"github.com/enamespace/tpl/internal/store/mysql"
-	"github.com/gin-gonic/gin"
 )
 
 func initRouter(g *gin.Engine) {
@@ -20,6 +21,9 @@ func initRouter(g *gin.Engine) {
 		{
 			userController := user.NewUserController(storeIns)
 			userv1.GET(":name", userController.Get)
+			userv1.POST("", userController.Create)
+			userv1.DELETE(":name", userController.Delete)
+			userv1.PUT(":name", userController.Update)
 		}
 	}
 

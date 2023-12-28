@@ -3,19 +3,26 @@ package internal
 import (
 	"context"
 	"errors"
-	"log"
+
+	"net/http"
 	"time"
 
-	"github.com/enamespace/tpl/internal/config"
+	"log"
+
+	"github.com/gin-gonic/gin"
 	"golang.org/x/sync/errgroup"
+
+	"github.com/enamespace/tpl/internal/config"
 )
 
 type Server struct {
 	cfg *config.Config
+	*gin.Engine
+	insecureServer *http.Server
 }
 
 func Run(cfg *config.Config) error {
-	server, err := New(cfg)
+	server, err := createServer(cfg)
 	if err != nil {
 		return err
 	}
@@ -23,25 +30,38 @@ func Run(cfg *config.Config) error {
 	return server.Run()
 }
 
-func New(cfg *config.Config) (*Server, error) {
-	if err := cfg.Validate(); err != nil {
-		return nil, errors.New("err")
+func (s *Server) Run() error {
+
+	s.insecureServer = &http.Server{
+		Addr:    s.cfg.InsecureServing.BindAddress,
+		Handler: s,
+		// ReadTimeout:    10 * time.Second,
+		// WriteTimeout:   10 * time.Second,
+		// MaxHeaderBytes: 1 << 20,
 	}
 
-	return &Server{cfg: cfg}, nil
-
-}
-
-func (srv *Server) PrepareRun() error {
 	var eg errgroup.Group
 
 	eg.Go(func() error {
-		log.Println("Start to init 1")
+		log.Printf("Start to listening the incoming requests on http address: %s", s.cfg.InsecureServing.BindAddress)
+
+		if err := s.insecureServer.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+			log.Fatal(err.Error())
+
+			return err
+		}
+
+		log.Printf("Server on %s stopped", s.cfg.InsecureServing.BindAddress)
 		return nil
 	})
 
 	eg.Go(func() error {
-		log.Println("Start to init 2")
+		log.Println("Start to https")
+		return nil
+	})
+
+	eg.Go(func() error {
+		log.Println("Start to grpc")
 		return nil
 	})
 
@@ -56,7 +76,10 @@ func (srv *Server) PrepareRun() error {
 	return nil
 }
 
-func (srv *Server) Run() error {
+func createServer(cfg *config.Config) (*Server, error) {
 
-	return nil
+	server := &Server{}
+	initRouter(server.Engine)
+
+	return nil, nil
 }

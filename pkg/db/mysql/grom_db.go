@@ -3,9 +3,10 @@ package mysql
 import (
 	"fmt"
 
-	"github.com/enamespace/tpl/pkg/options"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+
+	"github.com/enamespace/tpl/pkg/options"
 )
 
 func NewClient(o *options.MySQLOptions, opts ...gorm.Option) (*gorm.DB, error) {

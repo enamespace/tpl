@@ -15,9 +15,14 @@ tidy:
 gen:
 	@echo "make gen"
 
+## format: Gofmt (reformat) package sources (exclude vendor dir if existed).
 .PHONY: format
-format:
-	@echo "make format"
+format: tools.verify.golines tools.verify.goimports
+	@echo "===========> Formating codes"
+	@find -type f -name '*.go' | xargs gofmt -s -w
+	@find -type f -name '*.go' | xargs goimports -w -local $(ROOT_PACKAGE)
+	@find -type f -name '*.go' | xargs golines -w --max-len=120 --reformat-tags --shorten-comments --ignore-generated .
+	@$(GO) mod edit -fmt
 
 .PHONY: lint
 lint:
@@ -29,7 +34,7 @@ cover:
 
 .PHONY: build
 build:
-	@echo "make build"
+	@$(MAKE) go.build
 
 
 ## tools: install dependent tools.
