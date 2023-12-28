@@ -36,6 +36,9 @@ cover:
 build:
 	@$(MAKE) go.build
 
+.PHONY: clean
+clean:
+	@$(MAKE) go.clean
 
 ## tools: install dependent tools.
 .PHONY: tools
