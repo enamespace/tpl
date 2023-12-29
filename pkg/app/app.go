@@ -5,9 +5,11 @@ import (
 	"os"
 
 	"github.com/fatih/color"
+
 	"github.com/spf13/cobra"
 
 	"github.com/enamespace/tpl/pkg/errors"
+	"github.com/enamespace/tpl/pkg/version"
 )
 
 type Option func(*App)
@@ -68,6 +70,7 @@ func (a *App) runCommand(cmd *cobra.Command, args []string) error {
 		}
 	}
 
+	fmt.Printf("Version: `%s`", version.Get().ToJSON())
 	return nil
 }
 

@@ -37,3 +37,7 @@ install.golines:
 .PHONY: install.goimports
 install.goimports:
 	@$(GO) install golang.org/x/tools/cmd/goimports@latest
+
+.PHONY: install.go-junit-report
+install.go-junit-report:
+	@$(GO) install github.com/jstemmer/go-junit-report@latest

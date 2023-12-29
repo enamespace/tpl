@@ -28,6 +28,11 @@ format: tools.verify.golines tools.verify.goimports
 lint:
 	@$(MAKE) go.lint
 
+## test: Run unit test.
+.PHONY: test
+test:
+	@$(MAKE) go.test
+
 .PHONY: cover
 cover:
 	@echo "make cover"
