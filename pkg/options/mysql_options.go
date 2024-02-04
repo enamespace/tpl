@@ -20,9 +20,9 @@ type MySQLOptions struct {
 func NewMySQLOptions() *MySQLOptions {
 	return &MySQLOptions{
 		Host:                  "127.0.0.1:3306",
-		Username:              "",
-		Password:              "",
-		Database:              "",
+		Username:              "root",
+		Password:              "root",
+		Database:              "testdb",
 		MaxIdleConnections:    100,
 		MaxOpenConnections:    100,
 		MaxConnectionLifeTime: time.Duration(10) * time.Second,

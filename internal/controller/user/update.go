@@ -26,7 +26,7 @@ func (u *UserController) Update(c *gin.Context) {
 	}
 
 	user.Email = r.Email
-	user.NickName = r.NickName
+	user.Name = r.Name
 
 	//TODO: validate for update
 	if errs := user.Validate(); len(errs) > 0 {

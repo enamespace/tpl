@@ -10,7 +10,7 @@ import (
 
 func (u *UserController) Get(c *gin.Context) {
 	log.Println("get user function called.")
-
+	log.Println(c.Param("name"))
 	user, err := u.srv.User().Get(c, c.Param("name"))
 	if err != nil {
 		core.WriteResponse(c, err, nil)

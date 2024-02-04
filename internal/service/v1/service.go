@@ -10,12 +10,12 @@ type service struct {
 	ds store.Factory
 }
 
-func NewService(ds store.Factory) *service {
+func NewService(ds store.Factory) Service {
 	return &service{
 		ds: ds,
 	}
 }
 
 func (s *service) User() UserService {
-	return newUserSerivce(s.ds)
+	return newUserService(s.ds)
 }

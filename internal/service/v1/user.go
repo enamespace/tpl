@@ -18,7 +18,7 @@ type userService struct {
 	ds store.Factory
 }
 
-func newUserSerivce(ds store.Factory) *userService {
+func newUserService(ds store.Factory) *userService {
 	return &userService{
 		ds: ds,
 	}

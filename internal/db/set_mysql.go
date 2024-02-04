@@ -3,9 +3,10 @@ package db
 import (
 	"fmt"
 
-	v1 "github.com/enamespace/tpl/internal/api/v1"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+
+	v1 "github.com/enamespace/tpl/internal/api/v1"
 )
 
 type DBOptions struct {

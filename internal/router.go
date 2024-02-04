@@ -1,10 +1,13 @@
 package internal
 
 import (
+	"log"
+
 	"github.com/gin-gonic/gin"
 
-	"github.com/enamespace/tpl/internal/controller/user"
 	"github.com/enamespace/tpl/internal/pkg/middleware"
+
+	"github.com/enamespace/tpl/internal/controller/user"
 	"github.com/enamespace/tpl/internal/store/mysql"
 )
 
@@ -13,7 +16,10 @@ func initRouter(g *gin.Engine) {
 
 	v1 := g.Group("v1")
 
-	storeIns, _ := mysql.GetMysqlFactory()
+	storeIns, err := mysql.GetMysqlFactory(nil)
+	if err != nil {
+		log.Println(err)
+	}
 
 	{
 		userv1 := v1.Group("user")

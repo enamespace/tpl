@@ -3,6 +3,10 @@ package internal
 import (
 	"context"
 	"errors"
+	"fmt"
+
+	"github.com/enamespace/tpl/internal/store"
+	"github.com/enamespace/tpl/internal/store/mysql"
 
 	"net/http"
 	"time"
@@ -32,8 +36,10 @@ func Run(cfg *config.Config) error {
 
 func (s *Server) Run() error {
 
+	addr := fmt.Sprintf("%s:%d", s.cfg.InsecureServing.BindAddress, s.cfg.InsecureServing.BindPort)
 	s.insecureServer = &http.Server{
-		Addr:    s.cfg.InsecureServing.BindAddress,
+		Addr: addr,
+
 		Handler: s,
 		// ReadTimeout:    10 * time.Second,
 		// WriteTimeout:   10 * time.Second,
@@ -43,7 +49,7 @@ func (s *Server) Run() error {
 	var eg errgroup.Group
 
 	eg.Go(func() error {
-		log.Printf("Start to listening the incoming requests on http address: %s", s.cfg.InsecureServing.BindAddress)
+		log.Printf("Start to listening the incoming requests on http address: %s", addr)
 
 		if err := s.insecureServer.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 			log.Fatal(err.Error())
@@ -79,7 +85,16 @@ func (s *Server) Run() error {
 func createServer(cfg *config.Config) (*Server, error) {
 
 	server := &Server{}
+	server.cfg = cfg
+	server.Engine = gin.New()
+
+	storeIns, err := mysql.GetMysqlFactory(cfg.MySQLOptions)
+	if err != nil {
+		return nil, err
+	}
+	store.SetClient(storeIns)
+
 	initRouter(server.Engine)
 
-	return nil, nil
+	return server, nil
 }

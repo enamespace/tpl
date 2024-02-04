@@ -52,8 +52,15 @@ func (a *App) buildCommand() {
 	cmd.SetOut(os.Stdout)
 	cmd.SetErr(os.Stderr)
 	cmd.Flags().SortFlags = true
-	a.options.Flags()
-	// a.options.
+
+	if a.options != nil {
+		cliFlags := a.options.Flags()
+		cmdFlag := cmd.Flags()
+		for _, fs := range cliFlags.FlagSets {
+			cmdFlag.AddFlagSet(fs)
+		}
+
+	}
 
 	if a.runFunc != nil {
 		cmd.RunE = a.runCommand
@@ -69,8 +76,12 @@ func (a *App) runCommand(cmd *cobra.Command, args []string) error {
 			return err
 		}
 	}
+	fmt.Printf("Version: `%s`\n", version.Get().ToJSON())
 
-	fmt.Printf("Version: `%s`", version.Get().ToJSON())
+	if a.runFunc != nil {
+		return a.runFunc(a.basename)
+	}
+
 	return nil
 }
 

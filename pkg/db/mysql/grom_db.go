@@ -9,7 +9,8 @@ import (
 	"github.com/enamespace/tpl/pkg/options"
 )
 
-func NewClient(o *options.MySQLOptions, opts ...gorm.Option) (*gorm.DB, error) {
+// New function use base options and specific gorm option
+func New(o *options.MySQLOptions, opts ...gorm.Option) (*gorm.DB, error) {
 	dsn := fmt.Sprintf(`%s:%s@tcp(%s)/%s?charset=utf8&parseTime=%t&loc=%s`,
 		o.Username,
 		o.Password,
